@@ -15,11 +15,6 @@ from plugins.identity.user import (
 
 
 @pytest.fixture()
-def faker_seed() -> int:
-    return random.randint(1, 9999)
-
-
-@pytest.fixture()
 def user_data(registration_data: 'RegistrationData') -> 'UserData':
     """
     We need to simplify registration data to drop passwords.
