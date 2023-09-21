@@ -6,7 +6,7 @@ from mimesis import Field, Schema
 from mimesis.locales import Locale
 
 from server.apps.identity.models import User
-from tests.plugins.identity.user import (
+from plugins.identity.user import (
     RegistrationData,
     RegistrationDataFactory,
     UserAssertion,
@@ -35,9 +35,9 @@ def user_data(registration_data: 'RegistrationData') -> 'UserData':
 @pytest.fixture()
 def registration_data_factory(
     faker_seed: int,
-) -> RegistrationDataFactory:
+) -> 'RegistrationDataFactory':
     """Returns factory for fake random data for regitration."""
-    def factory(**fields: Unpack[RegistrationData]) -> RegistrationData:
+    def factory(**fields: Unpack['RegistrationData']) -> 'RegistrationData':
         mf = Field(locale=Locale.RU, seed=faker_seed)
         password = mf('password') # by default passwords are equal
         schema = Schema(
@@ -61,7 +61,7 @@ def registration_data_factory(
 
 
 @pytest.fixture()
-def registration_data(registration_data_factory: RegistrationDataFactory) -> 'RegistrationData':
+def registration_data(registration_data_factory: 'RegistrationDataFactory') -> 'RegistrationData':
     """
     We need to simplify registration data to register user
     """
@@ -75,7 +75,7 @@ def expected_user_data(user_data: 'UserData') -> 'UserData':
 
 @pytest.fixture(scope='session')
 def assert_correct_user() -> UserAssertion:
-	def factory(email: str, expected: UserData) -> None:
+	def factory(email: str, expected: 'UserData') -> None:
 		user = User.objects.get(email=email)
 		# Special fields:
 		assert user.id
