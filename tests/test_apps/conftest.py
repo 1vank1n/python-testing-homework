@@ -1,5 +1,6 @@
 import random
 from typing import Unpack
+from django.test import Client
 
 import pytest
 from mimesis import Field, Schema
@@ -64,8 +65,14 @@ def registration_data(registration_data_factory: 'RegistrationDataFactory') -> '
 
 
 @pytest.fixture()
-def expected_user_data(user_data: 'UserData') -> 'UserData':
-      return user_data
+def as_user(user_data: 'UserData') -> User:
+    return User.objects.create(**user_data)
+
+
+@pytest.fixture()
+def auth_client(as_user: User, client: Client) -> Client:
+    client.force_login(as_user)
+    return client
 
 
 @pytest.fixture(scope='session')
