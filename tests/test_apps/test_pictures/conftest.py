@@ -4,6 +4,9 @@ import pytest
 from mimesis import Field, Schema
 from mimesis.locales import Locale
 
+from server.apps.identity.models import User
+from server.apps.pictures.models import FavouritePicture
+
 if TYPE_CHECKING:
     from plugins.pictures.favourite import (
         FavouritePictureData,
@@ -38,3 +41,19 @@ def favourite_picture_data(
 ) -> 'FavouritePictureData':
     """A fixture that creates a favourite picture data object."""
     return favourite_picture_data_factory()
+
+
+@pytest.fixture()
+def favourite_picture(
+    as_user: User,
+    favourite_picture_data: 'FavouritePictureData',
+) -> FavouritePicture:
+    """
+    Creates a favourite picture object.
+
+    Using the given user and favourite picture data.
+    """
+    return FavouritePicture.objects.create(**{
+        'user': as_user,
+        **favourite_picture_data,
+    })
