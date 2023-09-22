@@ -1,17 +1,19 @@
-from datetime import datetime as dt
+from datetime import date
 from typing import Callable, Protocol, TypeAlias, TypedDict, Unpack, final
 
 
 class UserData(TypedDict, total=False):
     """
     Represent the simplified user data that is required to create a new user.
+
     It does not include ``password``, because it is very special in django.
     Importing this type is only allowed under ``if TYPE_CHECKING`` in tests.
     """
+
     email: str
     first_name: str
     last_name: str
-    date_of_birth: dt.date
+    date_of_birth: date
     address: str
     job_title: str
     phone: str
@@ -21,14 +23,17 @@ class UserData(TypedDict, total=False):
 class RegistrationData(UserData, total=False):
     """
     Represent the registration data that is required to create a new user.
+
     Importing this type is only allowed under ``if TYPE_CHECKING`` in tests.
     """
+
     password1: str
     password2: str
 
 
-@final
 class RegistrationDataFactory(Protocol):
+    """Protocol for registration data factory."""
+
     def __call__(
         self,
         **fields: Unpack[RegistrationData],
