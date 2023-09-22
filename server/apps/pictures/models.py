@@ -7,7 +7,10 @@ from server.common.django.models import TimedMixin
 
 
 @final
-class FavouritePicture(TimedMixin, models.Model):
+class FavouritePicture(
+    TimedMixin,
+    models.Model,
+):
     """Represents a :term:`picture` saved in :term:`favourites`."""
 
     # Linking:

@@ -8,7 +8,10 @@ from django.urls import reverse
 from server.apps.identity.models import User
 
 if TYPE_CHECKING:
-    from plugins.identity.user import RegistrationDataFactory, UserAssertion
+    from plugins.identity.user import (
+        RegistrationDataFactory,
+        UserAssertion,
+    )
 
 
 @pytest.mark.django_db()

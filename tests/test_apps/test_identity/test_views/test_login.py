@@ -6,7 +6,11 @@ from django.test import Client
 from django.urls import reverse
 
 if TYPE_CHECKING:
-    from plugins.identity.user import RegistrationData, UserAssertion, UserData
+    from plugins.identity.identity import (
+        RegistrationData,
+        UserAssertion,
+        UserData,
+    )
 
 
 @pytest.mark.django_db()
